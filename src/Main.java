@@ -3,6 +3,8 @@ Name: Oswaldo Virto
 Date: 02-01-2023
 Purpose: This program draws inspiration from the popular word game "Wordle"
 Objective is to guess the secret (5-letter) word within 6 tries.
+
+FIXME: Determine if exit codes are needed.
  */
 import java.io.*;
 import java.util.Scanner;
@@ -33,7 +35,7 @@ public class Main {
             if(guess.length() != MAX_LENGTH){
                 System.err.println("Please input a 5-letter word.");
             } else{
-                board[i] = Printer(guess, secretWord);
+                board[i] = ColorPrinter(guess, secretWord);
                 PrintBoard(board);
                 i++;
 
@@ -68,10 +70,16 @@ public class Main {
     }
 
 
+    //Generates Random Number within words array range//FIXME: get this to replace lines 62-69
+    private static int RandomNumber(){
+        return 0;
+    }
+
+
     //Takes a String and prints it to the console in color.
     //"Correct" letters will be green if they are in the word, in the right space.
     //Letters will be yellow if they are contained within the word but in the wrong space.
-    public static String Printer(String guess, String secretWord){
+    public static String ColorPrinter(String guess, String secretWord){
 
         StringBuilder guessColor = new StringBuilder();
         char guessChar;
@@ -122,7 +130,7 @@ public class Main {
     private static void WinCheck(String secretWord, String s){
         if (s.equals(secretWord)){
             System.out.println("Congratulations, You've won!");
-            System.exit(1);//Victory
+            System.exit(0);
         }
     }
 
