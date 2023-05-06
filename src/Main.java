@@ -15,7 +15,7 @@ public class Main {
         final int MAX_GUESSES = 6;
         final int MAX_LENGTH = 5;
         String secretWord = "";
-        secretWord = WordPicker(secretWord);
+        secretWord = WordPicker();
 
         Scanner sc = new Scanner(System.in);
 
@@ -48,7 +48,7 @@ public class Main {
 
 
     //Loads database/picks random word to set as secretWord
-    private static String WordPicker(String secretWord) throws IOException {
+    private static String WordPicker() throws IOException {
         File f = new File("5 Letter Words.txt");
         String[] words = new String[496];
         int i = 0;
