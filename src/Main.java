@@ -28,12 +28,17 @@ public class Main {
         String guess;
         System.out.printf("Welcome to Wurdle. You get %d guesses. Go!\n", MAX_GUESSES);
 
-        //Board at the start of the game TODO: make method for this
+        //Board at the start of the game
         String[] board = {"*****", "*****", "*****", "*****", "*****","*****"};
 
         int i = 0;
 
         while(i < MAX_GUESSES){
+
+            if(i > 0){
+                ClearScreen();
+            }
+
             guess = sc.next();
             guess = guess.toUpperCase();
 
@@ -53,7 +58,7 @@ public class Main {
     }
 
 
-    //Loads db/random word set as secretWord
+    //Loads db. Random word gets set as secretWord
     private static String DataLoad() throws IOException {
         File f = new File("5 Letter Words.txt");
         String[] words = new String[496];
@@ -69,11 +74,23 @@ public class Main {
     }
 
 
+    //TODO: Checks if guess contained in words DB
+    private static void DBCheck(){
+
+    }
+
+
+    //TODO: Clears out console
+    public static void ClearScreen(){
+        System.out.println("\033[H\033[2J");
+        System.out.flush();
+    }
+
+
     //Uses word picker method to pick random word in database
     private static String WordPicker(String[] words){
         String s = words[RandomNumber()];
         s = s.toUpperCase();
-        //TODO: Remove if no longer needed: System.out.println(s);
         return s;
     }
 
