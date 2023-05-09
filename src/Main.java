@@ -105,8 +105,9 @@ public class Main {
 
 
     //Prints String to console in color.
-    //"Correct" letters will be green if they are in the word, in the right space.
-    //Letters will be yellow if they are contained within the word but in the wrong space.
+    //Correct letters in correct spaces will be green
+    //Correct letters in incorrect spaces will be yellow
+    //Incorrect letters remain white
     public static String ColorPrinter(String guess, String secretWord){
 
         StringBuilder guessColor = new StringBuilder();
