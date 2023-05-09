@@ -9,15 +9,18 @@ EXIT CODES:
  */
 import java.io.*;
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args){
 
         final int MAX_GUESSES = 6;
         final int MAX_LENGTH = 5;
+        String[] allWords = new String[496];
         String secretWord = "";
         try {
-            secretWord = DataLoad();
+            allWords = DataLoad();
+
         } catch (IOException e) {
             System.err.printf("**  ERROR: IO exception: %s", e);
             System.exit(1);
@@ -26,6 +29,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         String guess;
+        secretWord = WordPicker(allWords);
         System.out.printf("Welcome to Wurdle. You get %d guesses. Go!\n", MAX_GUESSES);
 
         //Board at the start of the game
@@ -46,6 +50,7 @@ public class Main {
             if(guess.length() != MAX_LENGTH){
                 System.err.println("Please input a 5-letter word.");
             } else{
+                DBCheck(guess, allWords);//FIXME: error thrown no matter what
                 board[i] = ColorPrinter(guess, secretWord);
                 PrintBoard(board);
                 i++;
@@ -59,7 +64,7 @@ public class Main {
 
 
     //Loads db. Random word gets set as secretWord
-    private static String DataLoad() throws IOException {
+    private static String[] DataLoad() throws IOException {
         File f = new File("5 Letter Words.txt");
         String[] words = new String[496];
         int i = 0;
@@ -70,17 +75,18 @@ public class Main {
         }
         sc.close();
 
-        return WordPicker(words);
+        return words;
     }
 
 
     //TODO: Checks if guess contained in words DB
-    private static void DBCheck(){
-
+    private static void DBCheck(String guess, String[] words){
+        if(!(Arrays.asList(words).contains(guess)))
+            System.err.println("Guess not in word database. Please try again.");
     }
 
 
-    //TODO: Clears out console
+    //FIXME: Clears out console
     public static void ClearScreen(){
         System.out.println("\033[H\033[2J");
         System.out.flush();
