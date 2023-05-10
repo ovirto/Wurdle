@@ -17,7 +17,7 @@ public class Main {
         final int MAX_GUESSES = 6;
         final int MAX_LENGTH = 5;
         String[] allWords = new String[496];
-        String secretWord = "";
+        String secretWord;
         try {
             allWords = DataLoad();
 
@@ -49,8 +49,9 @@ public class Main {
             //Guesses can ONLY be 5 letters long
             if(guess.length() != MAX_LENGTH){
                 System.err.println("Please input a 5-letter word.");
+            } else if(!(Arrays.asList(allWords).contains(guess.toLowerCase()))){
+                System.err.println("Not in words list. Please try again.");
             } else{
-                DBCheck(guess, allWords);//FIXME: error thrown no matter what
                 board[i] = ColorPrinter(guess, secretWord);
                 PrintBoard(board);
                 i++;
@@ -76,13 +77,6 @@ public class Main {
         sc.close();
 
         return words;
-    }
-
-
-    //TODO: Checks if guess contained in words DB
-    private static void DBCheck(String guess, String[] words){
-        if(!(Arrays.asList(words).contains(guess)))
-            System.err.println("Guess not in word database. Please try again.");
     }
 
 
