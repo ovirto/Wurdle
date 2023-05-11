@@ -16,8 +16,10 @@ public class Main {
 
         final int MAX_GUESSES = 6;
         final int MAX_LENGTH = 5;
-        String[] allWords = new String[496];
+        String[] allWords = new String[3321];
         String secretWord;
+
+
         try {
             allWords = DataLoad();
 
@@ -35,7 +37,9 @@ public class Main {
         //Board at the start of the game
         String[] board = {"*****", "*****", "*****", "*****", "*****","*****"};
 
+
         int i = 0;
+
 
         while(i < MAX_GUESSES){
 
@@ -67,7 +71,7 @@ public class Main {
     //Loads db. Random word gets set as secretWord
     private static String[] DataLoad() throws IOException {
         File f = new File("5 Letter Words.txt");
-        String[] words = new String[496];
+        String[] words = new String[3321];
         int i = 0;
         Scanner sc = new Scanner(f);
         while (sc.hasNext()){

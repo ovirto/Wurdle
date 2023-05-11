@@ -179,6 +179,7 @@ fresh
 front
 fruit
 fully
+fumes
 funny
 giant
 given
@@ -291,6 +292,7 @@ panel
 paper
 party
 peace
+peony
 peter
 phase
 phone
