@@ -34,7 +34,7 @@ public class Main {
         secretWord = WordPicker(allWords);
         System.out.printf("Welcome to Wurdle. You get %d guesses. Go!\n", MAX_GUESSES);
 
-        //Board at the start of the game
+        //Empty game board
         String[] board = {"*****", "*****", "*****", "*****", "*****","*****"};
 
 
@@ -84,7 +84,21 @@ public class Main {
     }
 
 
-    //FIXME: Clears out console
+    //TODO: game rule explanation
+    private static void UserHelp(){
+        System.out.println("");
+    }
+
+
+    //TODO: prints unguessed letters
+    private static void RemainingLetters(){
+        char[] guesses;
+        System.out.println();
+    }
+
+
+    //FIXME: Clear Console
+    //private instead of public??
     public static void ClearScreen(){
         System.out.println("\033[H\033[2J");
         System.out.flush();
