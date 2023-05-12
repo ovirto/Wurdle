@@ -16,11 +16,15 @@ public class Main {
 
         final int MAX_GUESSES = 6;
         final int MAX_LENGTH = 5;
-        String[] allWords = new String[3321];
+        String[] allWords = new String[3321]; //space for all words in database
+
+        //TODO: remove letters as they are guessed, print array after each turn
+        char[] lettersRemaining = "abcdefghijklmnopqrstuvwxyz".toCharArray();
         String secretWord;
 
 
         try {
+            //fills array with all words in database
             allWords = DataLoad();
 
         } catch (IOException e) {
@@ -32,7 +36,12 @@ public class Main {
 
         String guess;
         secretWord = WordPicker(allWords);
-        System.out.printf("Welcome to Wurdle. You get %d guesses. Go!\n", MAX_GUESSES);
+        System.out.println("""
+                Welcome to Wurdle!
+                A home-made version of the New York Times word game we all know and love.
+
+                Input "help" at any point for the game rules.
+                """);
 
         //Empty game board
         String[] board = {"*****", "*****", "*****", "*****", "*****","*****"};
@@ -50,8 +59,11 @@ public class Main {
             guess = sc.next();
             guess = guess.toUpperCase();
 
-            //Guesses can ONLY be 5 letters long
-            if(guess.length() != MAX_LENGTH){
+            //
+            if(guess.equals("HELP")){
+                UserHelp();
+            } else if(guess.length() != MAX_LENGTH){
+                //Guesses can only be 5 letters long
                 System.err.println("Please input a 5-letter word.");
             } else if(!(Arrays.asList(allWords).contains(guess.toLowerCase()))){
                 System.err.println("Not in words list. Please try again.");
@@ -64,6 +76,7 @@ public class Main {
                 GuessCheck(i, secretWord);
             }
         }
+
         sc.close();
     }
 
@@ -73,26 +86,38 @@ public class Main {
         File f = new File("5 Letter Words.txt");
         String[] words = new String[3321];
         int i = 0;
+
         Scanner sc = new Scanner(f);
+
         while (sc.hasNext()){
             words[i] = sc.next();
             i++;
         }
+
         sc.close();
 
         return words;
     }
 
 
-    //TODO: game rule explanation
+    //Prints game rules
     private static void UserHelp(){
-        System.out.println("");
+        System.out.println("""
+                RULES:
+                
+                Objective:
+                Guess the secret word within 6 guesses.
+                
+                Gameplay:
+                White letters do not appear in the secret word.
+                Yellow letters are correct, but in the wrong space.
+                Green letters are correct and in the correct space.\s""");
     }
 
 
-    //TODO: prints unguessed letters
+    //FIXME: Prints unused letters
     private static void RemainingLetters(){
-        char[] guesses;
+        String guess;
         System.out.println();
     }
 
