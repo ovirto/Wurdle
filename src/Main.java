@@ -116,9 +116,18 @@ public class Main {
 
 
     //FIXME: Prints unused letters
-    private static void RemainingLetters(){
-        String guess;
-        System.out.println();
+    private static void RemainingLetters(char[] lettersRemaining, String guess){
+        //chars in "guess" converted to char array
+        char[] guessLetters = guess.toCharArray();
+
+        //sort guessLetters by alphabetical order
+        Arrays.sort(guessLetters);
+
+        for(int i = 0; i < lettersRemaining.length; i++){
+
+            if(Arrays.asList(guessLetters).contains(lettersRemaining[i])){
+            }
+        }
     }
 
 
