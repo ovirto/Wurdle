@@ -40,7 +40,7 @@ public class Main {
                 Welcome to Wurdle!
                 A home-made version of the New York Times word game we all know and love.
 
-                Input "help" at any point for the game rules.
+                Input "help" at any point for the game rules or "exit" to exit the program
                 """);
 
         //Empty game board
@@ -60,8 +60,11 @@ public class Main {
             guess = guess.toUpperCase();
 
             //
-            if(guess.equals("HELP")){
+            if(guess.equals("HELP")) {
                 UserHelp();
+            } else if(guess.equals("EXIT")) {
+                //exits game
+                UserExit();
             } else if(guess.length() != MAX_LENGTH){
                 //Guesses can only be 5 letters long
                 System.err.println("Please input a 5-letter word.");
@@ -97,6 +100,13 @@ public class Main {
         sc.close();
 
         return words;
+    }
+
+
+    //Exits game upon user request
+    private static void UserExit(){
+        System.out.println("Game exited by user.");
+        System.exit(0);
     }
 
 
