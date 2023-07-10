@@ -55,24 +55,38 @@ public class Main {
             guess = sc.next();
             guess = guess.toUpperCase();
 
-            //
+
             if(guess.equals("HELP")) {
+                //game rules
                 UserHelp();
+
             } else if(guess.equals("EXIT")) {
                 //exits game
                 UserExit();
+
             } else if(guess.length() != MAX_LENGTH){
                 //Guesses can only be 5 letters long
                 System.err.println("Please input a 5-letter word.");
+
             } else if(!(Arrays.asList(allWords).contains(guess.toLowerCase()))){
                 System.err.println("Not in words list. Please try again.");
+
             } else{
+                //FIXME: prints remaining letters
+                lettersRemaining = RemainingLetters(lettersRemaining);
+
+                //prints colored letters
                 board[i] = ColorPrinter(guess, secretWord);
+
+                //prints game board
                 PrintBoard(board);
                 i++;
 
+                //checks for win
                 WinCheck(guess, secretWord);
-                GuessCheck(i, secretWord);
+
+                //counts guesses
+                GuessCounter(i, secretWord);
             }
         }
 
@@ -80,7 +94,7 @@ public class Main {
     }
 
 
-    //Loads db. Random word gets set as secretWord
+    //Loads word database, Random word set as secretWord
     private static String[] DataLoad() throws IOException {
         File f = new File("5 Letter Words.txt");
         String[] words = new String[3321];
@@ -122,18 +136,15 @@ public class Main {
 
 
     //FIXME: Prints unused letters
-    private static void RemainingLetters(char[] lettersRemaining, String guess){
-        //chars in "guess" converted to char array
-        char[] guessLetters = guess.toCharArray();
+    private static char[] RemainingLetters(char[] lettersRemaining){
 
-        //sort guessLetters by alphabetical order
-        Arrays.sort(guessLetters);
-
+        //prints chars in lettersRemaining
         for(int i = 0; i < lettersRemaining.length; i++){
-
-            if(Arrays.asList(guessLetters).contains(lettersRemaining[i])){
-            }
+            System.out.print(lettersRemaining[i]);
         }
+        System.out.println("\n");
+
+        return lettersRemaining;
     }
 
 
@@ -215,7 +226,7 @@ public class Main {
 
 
     //Ends game if all guesses have been used.
-    private static void GuessCheck(int i, String s){
+    private static void GuessCounter(int i, String s){
         if (i == 6){
             System.out.println("Out of guesses. Better luck next time!");
             System.out.printf("Correct answer was: %s\n", s);
