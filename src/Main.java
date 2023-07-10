@@ -52,10 +52,6 @@ public class Main {
 
         while(i < MAX_GUESSES){
 
-            if(i > 0){
-                ClearScreen();
-            }
-
             guess = sc.next();
             guess = guess.toUpperCase();
 
@@ -138,14 +134,6 @@ public class Main {
             if(Arrays.asList(guessLetters).contains(lettersRemaining[i])){
             }
         }
-    }
-
-
-    //FIXME: Clear Console
-    //private instead of public??
-    public static void ClearScreen(){
-        System.out.println("\033[H\033[2J");
-        System.out.flush();
     }
 
 
