@@ -217,7 +217,7 @@ public class Main {
 
 
     //Grey console text
-    private static String GreyText(char c) { return "\033[0;37m" + c + "\033[0m";}
+    private static String GrayText(char c) { return "\033[0;37m" + c + "\033[0m";}
 
 
     //If correct, victory message displayed and game ends.
