@@ -16,10 +16,10 @@ public class Main {
 
         final int MAX_GUESSES = 6;
         final int MAX_LENGTH = 5;
-        String[] allWords = new String[3321]; //space for all words in database
+        String[] allWords = new String[21952]; //space for all words in database
 
         //TODO: remove letters as they are guessed, print array after each turn
-        char[] lettersRemaining = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        char[] lettersRemaining = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
         String secretWord;
 
 
@@ -72,8 +72,8 @@ public class Main {
                 System.err.println("Not in words list. Please try again.");
 
             } else{
-                //FIXME: prints remaining letters
-                lettersRemaining = RemainingLetters(lettersRemaining);
+                //prints remaining letters
+                lettersRemaining = RemainingLetters(lettersRemaining, guess);
 
                 //prints colored letters
                 board[i] = ColorPrinter(guess, secretWord);
@@ -97,7 +97,7 @@ public class Main {
     //Loads word database, Random word set as secretWord
     private static String[] DataLoad() throws IOException {
         File f = new File("5 Letter Words.txt");
-        String[] words = new String[3321];
+        String[] words = new String[21952];
         int i = 0;
 
         Scanner sc = new Scanner(f);
@@ -135,12 +135,12 @@ public class Main {
     }
 
 
-    //FIXME: Prints unused letters
-    private static char[] RemainingLetters(char[] lettersRemaining){
+    //FIXME: low priority- Prints unused letters
+    private static char[] RemainingLetters(char[] lettersRemaining, String guess){
 
         //prints chars in lettersRemaining
         for(int i = 0; i < lettersRemaining.length; i++){
-            System.out.print(lettersRemaining[i]);
+            //System.out.print(lettersRemaining[i]); prints with every input
         }
         System.out.println("\n");
 
@@ -159,16 +159,16 @@ public class Main {
     //Generates Random Number within words array range
     private static int RandomNumber(){
         int min = 0;
-        int max = 495;
+        int max = 21952;
         int range = max-min + 1;
         return (int)(Math.random() * range) + min;
     }
 
 
     //Prints String to console in color.
-    //Correct letters in correct spaces will be green
-    //Correct letters in incorrect spaces will be yellow
-    //Incorrect letters remain white
+    //Correct letters are green
+    //Correct letters in incorrect spaces are yellow
+    //Incorrect letters are white
     public static String ColorPrinter(String guess, String secretWord){
 
         StringBuilder guessColor = new StringBuilder();
@@ -178,7 +178,7 @@ public class Main {
 
         for(int i = 0; i < guess.length(); i++){
             guessChar = guess.charAt(i);
-            s = "" + guessChar;
+            s = String.valueOf(guessChar);
            guessColor.append(TextColor(guessChar, secretWord, count, s));
            count++;
         }
