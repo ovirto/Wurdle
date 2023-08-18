@@ -135,13 +135,32 @@ public class Main {
     }
 
 
-    //FIXME: low priority- Prints unused letters
+    //FIXME: Updates and prints lettersRemaining
     private static char[] RemainingLetters(char[] lettersRemaining, String guess){
 
-        //prints chars in lettersRemaining
-        for(int i = 0; i < lettersRemaining.length; i++){
-            //System.out.print(lettersRemaining[i]); prints with every input
+        char currentChar;
+        char currentLetter;
+
+        //Iterates through every char in guess
+        for(int i = 0; i < guess.length(); i++){
+            currentChar = guess.charAt(i);
+
+            //Iterates through every char in lettersRemaining
+            for(int j = 0; j < lettersRemaining.length; j++){
+                currentLetter = lettersRemaining[j];
+
+                //currentChar and currentLetter match removes j val from lettersRemaining
+                if(currentChar == currentLetter){
+                    lettersRemaining[j] = ' ';//TODO: observe printing behavior
+                }
+            }
         }
+
+        System.out.println("\n\nLetters remaining: ");
+        for(int j = 0; j < lettersRemaining.length; j++){
+            System.out.print(lettersRemaining[j] + " ");
+        }
+
         System.out.println("\n");
 
         return lettersRemaining;
@@ -217,7 +236,7 @@ public class Main {
 
 
     //Grey console text
-    private static String GrayText(char c) { return "\033[0;37m" + c + "\033[0m";}
+    private static String GreyText(char c) { return "\033[0;37m" + c + "\033[0m";}
 
 
     //If correct, victory message displayed and game ends.
