@@ -18,7 +18,7 @@ public class Main {
         final int MAX_LENGTH = 5;
         String[] allWords = new String[21952]; //space for all words in database
 
-        //TODO: remove letters as they are guessed, print array after each turn
+        //Letters get "removed" as they are guessed
         char[] lettersRemaining = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
         String secretWord;
 
@@ -135,7 +135,7 @@ public class Main {
     }
 
 
-    //FIXME: Updates and prints lettersRemaining
+    //Updates and prints lettersRemaining
     private static char[] RemainingLetters(char[] lettersRemaining, String guess){
 
         char currentChar;
@@ -151,7 +151,7 @@ public class Main {
 
                 //currentChar and currentLetter match removes j val from lettersRemaining
                 if(currentChar == currentLetter){
-                    lettersRemaining[j] = ' ';//TODO: observe printing behavior
+                    lettersRemaining[j] = ' ';
                 }
             }
         }
