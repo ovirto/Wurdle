@@ -16,81 +16,86 @@ public class Main {
 
         final int MAX_GUESSES = 6;
         final int MAX_LENGTH = 5;
-        String[] allWords = new String[21952]; //space for all words in database
-
-        //Letters get "removed" as they are guessed
         char[] lettersRemaining = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+        String[] allWords = new String[21952]; //space for all words in database
         String secretWord;
+        boolean replay = true;
 
 
-        try {
-            //fills array with all words in database
-            allWords = DataLoad();
+        //FIXME: Game replays based on user response
+        while (replay){
 
-        } catch (IOException e) {
-            System.err.printf("**  ERROR: IO exception: %s", e);
-            System.exit(1);
-        }
+            try {
+                //fills array with all words in database
+                allWords = DataLoad();
 
-        Scanner sc = new Scanner(System.in);
+            } catch (IOException e) {
+                System.err.printf("**  ERROR: IO exception: %s", e);
+                System.exit(1);
+            }
 
-        String guess;
-        secretWord = WordPicker(allWords);
-        System.out.println("""
+            Scanner sc = new Scanner(System.in);
+
+            String guess;
+            secretWord = WordPicker(allWords);
+            System.out.println("""
                 Welcome to Wurdle!
                 A home-made version of the New York Times word game we all know and love.
 
                 Input "help" at any point for the game rules or "exit" to exit the program
                 """);
 
-        //Empty game board
-        String[] board = {"*****", "*****", "*****", "*****", "*****","*****"};
+            //Empty game board
+            String[] board = {"*****", "*****", "*****", "*****", "*****","*****"};
 
 
-        int i = 0;
+            int i = 0;
 
 
-        while(i < MAX_GUESSES){
+            while(i < MAX_GUESSES){
 
-            guess = sc.next();
-            guess = guess.toUpperCase();
+                guess = sc.next();
+                guess = guess.toUpperCase();
 
 
-            if(guess.equals("HELP")) {
-                //game rules
-                UserHelp();
+                if(guess.equals("HELP")) {
+                    //game rules
+                    UserHelp();
 
-            } else if(guess.equals("EXIT")) {
-                //exits game
-                UserExit();
+                } else if(guess.equals("EXIT")) {
+                    //exits game
+                    UserExit();
 
-            } else if(guess.length() != MAX_LENGTH){
-                //Guesses can only be 5 letters long
-                System.err.println("Please input a 5-letter word.");
+                } else if(guess.length() != MAX_LENGTH){
+                    //Guesses can only be 5 letters long
+                    System.err.println("Please input a 5-letter word.");
 
-            } else if(!(Arrays.asList(allWords).contains(guess.toLowerCase()))){
-                System.err.println("Not in words list. Please try again.");
+                } else if(!(Arrays.asList(allWords).contains(guess.toLowerCase()))){
+                    System.err.println("Not in words list. Please try again.");
 
-            } else{
-                //prints remaining letters
-                lettersRemaining = RemainingLetters(lettersRemaining, guess);
+                } else{
+                    //prints remaining letters
+                    lettersRemaining = RemainingLetters(lettersRemaining, guess);
 
-                //prints colored letters
-                board[i] = ColorPrinter(guess, secretWord);
+                    //prints colored letters
+                    board[i] = ColorPrinter(guess, secretWord);
 
-                //prints game board
-                PrintBoard(board);
-                i++;
+                    //prints game board
+                    PrintBoard(board);
+                    i++;
 
-                //checks for win
-                WinCheck(guess, secretWord);
+                    //checks for win
+                    WinCheck(guess, secretWord);
 
-                //counts guesses
-                GuessCounter(i, secretWord);
+                    //counts guesses
+                    GuessCounter(i, secretWord);
+                }
             }
-        }
 
-        sc.close();
+            sc.close();
+
+            replay = AskReplay();
+        }
     }
 
 
@@ -116,7 +121,7 @@ public class Main {
     //Exits game upon user request
     private static void UserExit(){
         System.out.println("Game exited by user.");
-        System.exit(0);
+        System.exit(0); //TODO: check if needed after AskReplay completed
     }
 
 
@@ -243,7 +248,7 @@ public class Main {
     private static void WinCheck(String secretWord, String s){
         if (s.equals(secretWord)){
             System.out.println("Congratulations, You've won!");
-            System.exit(0);
+            //System.exit(0); TODO: determine if needed after AskReplay complete
         }
     }
 
@@ -253,7 +258,27 @@ public class Main {
         if (i == 6){
             System.out.println("Out of guesses. Better luck next time!");
             System.out.printf("Correct answer was: %s\n", s);
-            System.exit(0);
+            //System.exit(0); TODO: determine if needed after AskReplay complete
         }
+    }
+
+    //Game replay
+    private static Boolean AskReplay(){
+
+        Scanner ask = new Scanner(System.in);
+        String response;
+
+        System.out.println("\nPlay again? (y/n)");
+        response = ask.nextLine();
+
+        if(response.equals("n")){
+            return false;
+        } else if (!(response.equals("y"))){
+            System.err.println("Invalid response. 'y' or 'n' responses only.");
+        }
+
+        ask.close();
+
+        return true;
     }
 }
