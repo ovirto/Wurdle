@@ -14,15 +14,17 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args){
 
+        Scanner sc = new Scanner(System.in);
+
         final int MAX_GUESSES = 6;
         final int MAX_LENGTH = 5;
         char[] lettersRemaining = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-        String[] allWords = new String[21952]; //space for all words in database
+        String[] allWords = new String[21952]; //FIXME: make space for all words in database
         String secretWord;
         boolean replay = true;
 
 
-        //FIXME: Game replays based on user response
+        //Game replay loop
         while (replay){
 
             try {
@@ -34,7 +36,6 @@ public class Main {
                 System.exit(1);
             }
 
-            Scanner sc = new Scanner(System.in);
 
             String guess;
             secretWord = WordPicker(allWords);
@@ -92,10 +93,11 @@ public class Main {
                 }
             }
 
-            sc.close();
 
-            replay = AskReplay();
+
+            replay = AskReplay(sc);
         }
+        sc.close();
     }
 
 
@@ -121,7 +123,7 @@ public class Main {
     //Exits game upon user request
     private static void UserExit(){
         System.out.println("Game exited by user.");
-        System.exit(0); //TODO: check if needed after AskReplay completed
+        System.exit(0);
     }
 
 
@@ -162,8 +164,8 @@ public class Main {
         }
 
         System.out.println("\n\nLetters remaining: ");
-        for(int j = 0; j < lettersRemaining.length; j++){
-            System.out.print(lettersRemaining[j] + " ");
+        for (char c : lettersRemaining) {
+            System.out.print(c + " ");
         }
 
         System.out.println("\n");
@@ -229,15 +231,11 @@ public class Main {
 
 
     //Green console text
-    private static String GreenText(char c){
-        return "\033[0;32m" + c + "\033[0m";
-    }
+    private static String GreenText(char c){ return "\033[0;32m" + c + "\033[0m";}
 
 
     //Yellow console text
-    private static String YellowText(char c) {
-        return "\033[0;33m" + c + "\033[0m";
-    }
+    private static String YellowText(char c) { return "\033[0;33m" + c + "\033[0m";}
 
 
     //Grey console text
@@ -248,7 +246,6 @@ public class Main {
     private static void WinCheck(String secretWord, String s){
         if (s.equals(secretWord)){
             System.out.println("Congratulations, You've won!");
-            //System.exit(0); TODO: determine if needed after AskReplay complete
         }
     }
 
@@ -258,26 +255,24 @@ public class Main {
         if (i == 6){
             System.out.println("Out of guesses. Better luck next time!");
             System.out.printf("Correct answer was: %s\n", s);
-            //System.exit(0); TODO: determine if needed after AskReplay complete
         }
     }
 
     //Game replay
-    private static Boolean AskReplay(){
-
-        Scanner ask = new Scanner(System.in);
-        String response;
-
+    //Scanner created in main gets passed in as parameter
+    private static Boolean AskReplay(Scanner sc) {
+        //FIXME: message gets spammed with more than one input
         System.out.println("\nPlay again? (y/n)");
-        response = ask.nextLine();
 
-        if(response.equals("n")){
+        String response = sc.next();
+        if (response.equals("n")) {
+            System.out.println("Thanks for playing!");
+            //sc.close(); Scanner may not need to be closed here
             return false;
-        } else if (!(response.equals("y"))){
+        } else if (!response.equals("y")) {
             System.err.println("Invalid response. 'y' or 'n' responses only.");
+            AskReplay(sc);
         }
-
-        ask.close();
 
         return true;
     }
