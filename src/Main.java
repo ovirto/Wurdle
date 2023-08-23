@@ -239,10 +239,6 @@ public class Main {
     private static String YellowText(char c) { return "\033[0;33m" + c + "\033[0m";}
 
 
-    //Grey console text
-    private static String GreyText(char c) { return "\033[0;37m" + c + "\033[0m";}
-
-
     //If correct, victory message displayed and game ends.
     private static void WinCheck(String secretWord, String s){
         if (s.equals(secretWord)){
