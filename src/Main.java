@@ -18,7 +18,6 @@ public class Main {
 
         final int MAX_GUESSES = 6;
         final int MAX_LENGTH = 5;
-        char[] lettersRemaining = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
         String[] allWords = new String[21952]; //FIXME: make space for all words in database
         String secretWord;
         boolean replay = true;
@@ -26,6 +25,8 @@ public class Main {
 
         //Game replay loop
         while (replay){
+
+            char[] lettersRemaining = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
             try {
                 //fills array with all words in database
@@ -261,6 +262,7 @@ public class Main {
     //Game replay
     //Scanner created in main gets passed in as parameter
     private static Boolean AskReplay(Scanner sc) {
+
         //FIXME: message gets spammed with more than one input
         System.out.println("\nPlay again? (y/n)");
 
