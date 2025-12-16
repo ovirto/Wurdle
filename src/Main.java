@@ -18,7 +18,7 @@ public class Main {
 
         final int MAX_GUESSES = 6;
         final int MAX_LENGTH = 5;
-        String[] allWords = new String[21952]; //FIXME: make space for all words in database
+        String[] allWords = new String[21952]; //FIXME: dynamic database expansion
         String secretWord;
         boolean replay = true;
 
@@ -245,6 +245,7 @@ public class Main {
     private static String YellowText(char c) { return "\033[0;33m" + c + "\033[0m";}
 
 
+    //FIXME: If user wins on 6th guess, max guesses message still prints.
     //If correct, victory message displayed and game ends.
     private static void WinCheck(String secretWord, String s){
         if (s.equals(secretWord)){
@@ -265,7 +266,6 @@ public class Main {
     //Scanner created in main gets passed in as parameter
     private static Boolean AskReplay(Scanner sc) {
 
-        //FIXME: message gets spammed with more than one input
         System.out.println("\nPlay again? (y/n)");
 
         String response = sc.next();
